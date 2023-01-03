@@ -11,7 +11,9 @@ export const MainProvider = ({ children }) => {
   });
   const [settingsActive, setsettingsActive] = useState(false);
   const [linksActive, setlinksActive] = useState(true);
-  const [optionComponent,setoptionComponent] = useState(<></>)
+  const [optionComponent, setoptionComponent] = useState(<></>);
+  const [tokenExp, settokenExp] = useState("");
+  const [min, setmin] = useState(0);
   return (
     <MainState.Provider
       value={{
@@ -27,6 +29,10 @@ export const MainProvider = ({ children }) => {
         setlinksActive,
         optionComponent,
         setoptionComponent,
+        tokenExp,
+        settokenExp,
+        min,
+        setmin,
       }}
     >
       {children}

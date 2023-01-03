@@ -2,8 +2,11 @@
 
 const checkUserToken = async (token) => {
   if (token) {
-    const response = await fetch("http://localhost:4000/token?id=" + token, {
+    const response = await fetch("/token", {
       method: "GET",
+      headers: {
+        token: token,
+      },
     });
     let data = await response.json();
     if (response.status === 200 && data.tokenExp > Date.now()) {

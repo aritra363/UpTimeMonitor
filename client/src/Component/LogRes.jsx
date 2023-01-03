@@ -12,8 +12,14 @@ import createUserData from "../Request/createUserData";
 
 function LogRes() {
   //state for token and isloggedin
-  const { isLoggedin, setisLoggedin, setuserData, userData } =
-    useContext(MainState);
+  const {
+    isLoggedin,
+    setisLoggedin,
+    setuserData,
+    userData,
+    tokenExp,
+    settokenExp,
+  } = useContext(MainState);
   //state for toggling login and reegistartion form
   const [form, setform] = useState("login");
 
@@ -254,13 +260,14 @@ function LogRes() {
       if (Userphone && Userpassword) {
         //proceed
         Userphone = "91" + Userphone;
-        createUserToken(Userphone, Userpassword).then((tokenid) => {
-          if (tokenid) {
-            fetchUserData(Userphone, tokenid).then((UserObj) => {
+        createUserToken(Userphone, Userpassword).then((token) => {
+          if (token) {
+            fetchUserData(Userphone, token.id).then((UserObj) => {
               if (UserObj) {
                 setuserData(UserObj);
                 setisLoggedin(true);
-                localStorage.setItem("token", tokenid);
+                localStorage.setItem("token", token.id);
+                settokenExp(token.tokenExp);
               } else {
                 setisLoggedin(false);
               }
@@ -291,17 +298,17 @@ function LogRes() {
         };
         createUserData(Userdata).then((result) => {
           if (result) {
-            createUserToken(Userphone, Userpassword).then((tokenid) => {
-              if (tokenid) {
-                localStorage.setItem("token",tokenid);
+            createUserToken(Userphone, Userpassword).then((token) => {
+              if (token) {
+                localStorage.setItem("token", token.id);
                 delete Userdata.password;
                 setuserData(Userdata);
                 setisLoggedin(true);
+                settokenExp(token.tokenExp);
               }
             });
           }
         });
-        console.log(Userdata);
       } else {
         alert("Invalid Input! Please Check");
       }
@@ -318,6 +325,7 @@ function LogRes() {
           if (userObj) {
             setuserData(userObj);
             setisLoggedin(true);
+            settokenExp(data.tokenExp);
           } else {
             setisLoggedin(false);
           }

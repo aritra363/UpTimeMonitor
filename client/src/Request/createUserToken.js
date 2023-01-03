@@ -7,13 +7,13 @@ const createUserToken = async (phone, password) => {
         phone,
         password,
       };
-      const response = await fetch("http://localhost:4000/token", {
+      const response = await fetch("/token", {
         method: "POST",
         body: JSON.stringify(requestObj),
       });
       let data = await response.json();
       if (response.status === 200) {
-        return data.id;
+        return data;
       } else {
         alert("Invalid phone and password");
         return false;

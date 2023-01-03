@@ -4,6 +4,7 @@
     "production": "SET NODE_ENV=production&&nodemon index"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "twilio": "^3.83.3"
   }
 }

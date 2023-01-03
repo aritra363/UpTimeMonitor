@@ -32,8 +32,7 @@ function EditProfile() {
             <FaPhone />
             &nbsp;
             <span style={{ fontWeight: "bold" }}>Phone</span> :{" "}
-            {`+(${phone.substring(0, 2)})` +
-              phone.substring(2, phone.length - 1)}
+            {`+(${phone.substring(0, 2)})` + phone.substring(2, phone.length)}
           </div>
         </div>
       </div>

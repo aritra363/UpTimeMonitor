@@ -3,9 +3,12 @@
 const fetchUserData = async (phone, token) => {
   try {
     const userResponse = await fetch(
-      `http://localhost:4000/user?phone=${phone}&token=${token}`,
+      `/user?phone=${phone}`,
       {
         method: "GET",
+        headers: {
+          "token" : token
+        },
       }
     );
     const userObj = await userResponse.json();

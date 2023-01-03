@@ -6,7 +6,7 @@ const extendToken = async (token) => {
       id: token,
       extend: true,
     };
-    const response = await fetch("http://localhost:4000/token", {
+    const response = await fetch("/token", {
       method: "PUT",
       body: JSON.stringify(tokenExtend),
       mode: "cors",

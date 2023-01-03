@@ -2,7 +2,7 @@
 
 const createUserData = async (Userdata) => {
   try {
-    const userResponse = await fetch(`http://localhost:4000/user`, {
+    const userResponse = await fetch(`/user`, {
       method: "POST",
       body: JSON.stringify(Userdata),
     });

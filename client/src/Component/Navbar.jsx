@@ -10,6 +10,7 @@ import {
 } from "react-icons/ai";
 import checkUserToken from "../Request/checkUserToken";
 import ViewProfile from "./OptionsComponent/ViewProfile";
+import extendToken from "../Request/extendToken";
 //import extendToken from "../Request/extendToken";
 
 function Navbar() {
@@ -23,6 +24,10 @@ function Navbar() {
     linksActive,
     setlinksActive,
     setoptionComponent,
+    settokenExp,
+    tokenExp,
+    min,
+    setmin,
   } = useContext(MainState);
 
   const [time, settime] = useState("00:00:00");
@@ -30,6 +35,7 @@ function Navbar() {
   const logoutHandler = () => {
     setisLoggedin(false);
     localStorage.removeItem("token");
+    settokenExp("");
     setuserData(undefined);
     setsidebar({
       Lists: ["Demo 1", "Demo 2", "Demo 3"],
@@ -44,7 +50,12 @@ function Navbar() {
   const settingsHandler = () => {
     setsidebar(() => {
       return {
-        Lists: ["View Profile", "Edit Profile", "Delete My Account"],
+        Lists: [
+          "View Profile",
+          "Edit Profile",
+          "Change Password",
+          "Delete My Account",
+        ],
         Name: "Settings",
       };
     });
@@ -63,10 +74,12 @@ function Navbar() {
   };
   useEffect(() => {
     checkUserToken(localStorage.getItem("token")).then((data) => {
+      console.log(data);
       if (data) {
+        settokenExp(data.tokenExp);
         setInterval(() => {
           let tokenTime = Math.abs(
-            new Date(Date.now()).getTime() - new Date(data.tokenExp).getTime()
+            new Date(Date.now()).getTime() - new Date(tokenExp).getTime()
           );
           let hours = Math.floor(
             (tokenTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -75,15 +88,34 @@ function Navbar() {
             (tokenTime % (1000 * 60 * 60)) / (1000 * 60)
           );
           let seconds = Math.floor((tokenTime % (1000 * 60)) / 1000);
-          if (minutes === 0 && seconds === 0) {
-            logoutHandler();
-          }
           //console.log(days, hours, minutes, seconds);
           settime(`${hours} : ${minutes} : ${seconds}`);
+          if (minutes === 59 && seconds == 30) {
+            setmin(minutes);
+          }
+          /* if (minutes == 59) {
+            extendToken(localStorage.getItem("token"), (exp) => {
+              settokenExp(exp);
+            });
+          } */
         }, 1000);
       }
     });
-  }, []);
+  }, [tokenExp]);
+  useEffect(() => {
+    if (min === 59) {
+      console.log("1");
+      extendToken(localStorage.getItem("token"), (exp) => {
+        if (exp) {
+          settokenExp(exp);
+          console.log(exp);
+          alert();
+        } else {
+          console.log("fsdf");
+        }
+      });
+    }
+  }, [min]);
   return (
     <nav className="navbar navbar-expand-lg ">
       <div className="container-fluid">

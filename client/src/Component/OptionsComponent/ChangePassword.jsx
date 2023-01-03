@@ -1,19 +1,20 @@
 import React from "react";
 import { useContext } from "react";
 import MainState from "../../Context/MainState";
-import { FaUserAlt, FaUserFriends, FaPhone } from "react-icons/fa";
+import { FaUserAlt, FaEdit, FaPhone } from "react-icons/fa";
+import { RiLockPasswordLine } from "react-icons/ri";
 
-function ViewProfile() {
+function ChangePassword() {
   const { userData } = useContext(MainState);
   const phone = userData.phone.toString();
   return (
     <div className="card">
       <div className="card-header">
         <div style={{ display: "flex", alignItems: "center" }}>
-          <FaUserFriends size="20" />
+          <RiLockPasswordLine size="20" />
           &nbsp;
           <span style={{ fontWeight: "bold", fontSize: "20px" }}>
-            View Profile
+            Change Password
           </span>
         </div>
       </div>
@@ -40,4 +41,4 @@ function ViewProfile() {
   );
 }
 
-export default ViewProfile;
+export default ChangePassword;

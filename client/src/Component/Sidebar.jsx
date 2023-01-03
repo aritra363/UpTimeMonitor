@@ -6,6 +6,7 @@ import MainState from "../Context/MainState";
 import { FaTachometerAlt } from "react-icons/fa";
 import ViewProfile from "./OptionsComponent/ViewProfile";
 import EditProfile from "./OptionsComponent/EditProfile";
+import ChangePassword from "./OptionsComponent/ChangePassword";
 
 function Sidebar() {
   const { sidebar, setoptionComponent } = useContext(MainState);
@@ -27,6 +28,15 @@ function Sidebar() {
           return (
             <>
               <EditProfile />
+            </>
+          );
+        });
+        break;
+      case "Change Password":
+        setoptionComponent(() => {
+          return (
+            <>
+              <ChangePassword />
             </>
           );
         });
