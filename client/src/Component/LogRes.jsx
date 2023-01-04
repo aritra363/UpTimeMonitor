@@ -12,14 +12,8 @@ import createUserData from "../Request/createUserData";
 
 function LogRes() {
   //state for token and isloggedin
-  const {
-    isLoggedin,
-    setisLoggedin,
-    setuserData,
-    userData,
-    tokenExp,
-    settokenExp,
-  } = useContext(MainState);
+  const { isLoggedin, setisLoggedin, setuserData, userData, tokenExp } =
+    useContext(MainState);
   //state for toggling login and reegistartion form
   const [form, setform] = useState("login");
 
@@ -251,7 +245,7 @@ function LogRes() {
       : true;
 
   //Signin & signup operation
-  const submitHandler = () => {
+  const submitHandler = async () => {
     //Find out which Request Login or Register
     if (form === "login") {
       let Userphone = phone.length === 10 ? phone : false;
@@ -260,20 +254,19 @@ function LogRes() {
       if (Userphone && Userpassword) {
         //proceed
         Userphone = "91" + Userphone;
-        createUserToken(Userphone, Userpassword).then((token) => {
-          if (token) {
-            fetchUserData(Userphone, token.id).then((UserObj) => {
-              if (UserObj) {
-                setuserData(UserObj);
-                setisLoggedin(true);
-                localStorage.setItem("token", token.id);
-                settokenExp(token.tokenExp);
-              } else {
-                setisLoggedin(false);
-              }
-            });
+        const token = await createUserToken(Userphone, Userpassword);
+        if (token) {
+          const UserObj = await fetchUserData(Userphone, token.id);
+          if (UserObj) {
+            setuserData(UserObj);
+            setisLoggedin(true);
+            localStorage.setItem("token", token.id);
+            alert("Loggedin successfully");
+          } else {
+            setisLoggedin(false);
+            alert("Something went wrong!");
           }
-        });
+        }
       } else {
         alert("Invalid Input! Please Check");
       }
@@ -304,7 +297,6 @@ function LogRes() {
                 delete Userdata.password;
                 setuserData(Userdata);
                 setisLoggedin(true);
-                settokenExp(token.tokenExp);
               }
             });
           }
@@ -325,7 +317,6 @@ function LogRes() {
           if (userObj) {
             setuserData(userObj);
             setisLoggedin(true);
-            settokenExp(data.tokenExp);
           } else {
             setisLoggedin(false);
           }
@@ -338,38 +329,40 @@ function LogRes() {
     });
   }, []);
   return (
-    <MDBContainer className="my-5 gradient-form shadow-lg p-3 mb-5 bg-grey rounded my-bg">
-      <MDBRow>
-        <MDBCol col="6" className="mb-5">
-          <div className="d-flex flex-column ms-5">
-            <div className="text-center">
-              <img src={serverImg} style={{ width: "185px" }} alt="logo" />
-              <h4 className="mt-1 mb-5 pb-1">Up Time Monitor System</h4>
+    <>
+      <MDBContainer className="my-5 gradient-form shadow-lg p-3 mb-5 bg-grey rounded my-bg">
+        <MDBRow>
+          <MDBCol col="6" className="mb-5">
+            <div className="d-flex flex-column ms-5">
+              <div className="text-center">
+                <img src={serverImg} style={{ width: "185px" }} alt="logo" />
+                <h4 className="mt-1 mb-5 pb-1">Up Time Monitor System</h4>
+              </div>
+              {form === "login" ? loginForm : registrationForm}
+              <div className="text-center pt-1 mb-5 pb-1">
+                <button
+                  className="btn  mb-4 w-100"
+                  disabled={form === "login" ? signinValidate : signupValidate}
+                  onClick={submitHandler}
+                >
+                  {form === "login" ? "Sign in" : "Sign up"}
+                </button>
+              </div>
             </div>
-            {form === "login" ? loginForm : registrationForm}
-            <div className="text-center pt-1 mb-5 pb-1">
-              <button
-                className="btn  mb-4 w-100"
-                disabled={form === "login" ? signinValidate : signupValidate}
-                onClick={submitHandler}
-              >
-                {form === "login" ? "Sign in" : "Sign up"}
-              </button>
-            </div>
-          </div>
-        </MDBCol>
+          </MDBCol>
 
-        <MDBCol col="6" className="mb-5">
-          <div className="d-flex flex-column  justify-content-center gradient-custom-1 h-100 mb-4">
-            <div className="text-black px-3 py-4 p-md-5 mx-md-4">
-              <button className="btn  mb-4 w-100" onClick={formChangeHandler}>
-                {form === "login" ? "Register" : "Login"}
-              </button>
+          <MDBCol col="6" className="mb-5">
+            <div className="d-flex flex-column  justify-content-center gradient-custom-1 h-100 mb-4">
+              <div className="text-black px-3 py-4 p-md-5 mx-md-4">
+                <button className="btn  mb-4 w-100" onClick={formChangeHandler}>
+                  {form === "login" ? "Register" : "Login"}
+                </button>
+              </div>
             </div>
-          </div>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </>
   );
 }
 

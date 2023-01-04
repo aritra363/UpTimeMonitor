@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import ViewLinks from "../Component/OptionsComponent/ViewLinks";
 
 const MainState = createContext();
 
@@ -6,14 +7,13 @@ export const MainProvider = ({ children }) => {
   const [isLoggedin, setisLoggedin] = useState(false);
   const [userData, setuserData] = useState(undefined);
   const [sidebar, setsidebar] = useState({
-    Lists: ["Demo 1", "Demo 2", "Demo 3"],
-    Name: "Demo",
+    Lists: ["View Links", "Edit Links"],
+    Name: "Links",
   });
   const [settingsActive, setsettingsActive] = useState(false);
   const [linksActive, setlinksActive] = useState(true);
-  const [optionComponent, setoptionComponent] = useState(<></>);
-  const [tokenExp, settokenExp] = useState("");
-  const [min, setmin] = useState(0);
+  const [optionComponent, setoptionComponent] = useState(<ViewLinks />);
+  const [intID, setintID] = useState("");
   return (
     <MainState.Provider
       value={{
@@ -29,10 +29,8 @@ export const MainProvider = ({ children }) => {
         setlinksActive,
         optionComponent,
         setoptionComponent,
-        tokenExp,
-        settokenExp,
-        min,
-        setmin,
+        intID,
+        setintID,
       }}
     >
       {children}

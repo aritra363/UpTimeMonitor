@@ -7,6 +7,8 @@ import { FaTachometerAlt } from "react-icons/fa";
 import ViewProfile from "./OptionsComponent/ViewProfile";
 import EditProfile from "./OptionsComponent/EditProfile";
 import ChangePassword from "./OptionsComponent/ChangePassword";
+import ViewLinks from "./OptionsComponent/ViewLinks";
+import EditLinks from "./OptionsComponent/EditLinks";
 
 function Sidebar() {
   const { sidebar, setoptionComponent } = useContext(MainState);
@@ -44,16 +46,24 @@ function Sidebar() {
       case "Delete My Account":
         window.confirm("Are you Sure");
         break;
-      case "Demo 1":
+      case "View Links":
         setoptionComponent(() => {
           return (
             <>
-              <div>Demo 1</div>
+              <ViewLinks />
             </>
           );
         });
         break;
-
+      case "Edit Links":
+        setoptionComponent(() => {
+          return (
+            <>
+              <EditLinks />
+            </>
+          );
+        });
+        break;
       default:
         break;
     }
