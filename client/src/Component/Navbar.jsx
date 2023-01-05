@@ -12,6 +12,7 @@ import checkUserToken from "../Request/checkUserToken";
 import ViewProfile from "./OptionsComponent/ViewProfile";
 import ViewLinks from "./OptionsComponent/ViewLinks";
 import extendToken from "../Request/extendToken";
+import toast from "react-hot-toast";
 //import extendToken from "../Request/extendToken";
 
 function Navbar() {
@@ -45,6 +46,7 @@ function Navbar() {
     setlinksActive(true);
     settime("00:00:00");
     setoptionComponent(<ViewLinks />);
+    toast.success("LoggedOut successfully", { duration: 2000 });
   };
 
   const settingsHandler = () => {
@@ -96,6 +98,9 @@ function Navbar() {
                 expiry = exp;
                 console.log("done");
               } else {
+                toast.error("Something went Wrong Please ReLogin!", {
+                  duration: 2000,
+                });
                 logoutHandler();
               }
             };

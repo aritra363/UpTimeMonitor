@@ -1,4 +1,5 @@
 import React from "react";
+import toast from "react-hot-toast";
 //import PropTypes from "prop-types";
 import "../CStyling/LogRes.css";
 import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
@@ -256,19 +257,26 @@ function LogRes() {
         Userphone = "91" + Userphone;
         const token = await createUserToken(Userphone, Userpassword);
         if (token) {
-          const UserObj = await fetchUserData(Userphone, token.id);
+          const UserObj = await toast.promise(
+            fetchUserData(Userphone, token.id),
+            {
+              loading: "Logging In",
+            }
+          );
           if (UserObj) {
             setuserData(UserObj);
             setisLoggedin(true);
             localStorage.setItem("token", token.id);
-            alert("Loggedin successfully");
+            toast.success("Loggedin successfully", { duration: 2000 });
           } else {
             setisLoggedin(false);
-            alert("Something went wrong!");
+            toast.error("Something went wrong!", { duration: 2000 });
           }
+        } else {
+          toast.error("Phone or Password Invalid", { duration: 2000 });
         }
       } else {
-        alert("Invalid Input! Please Check");
+        toast.error("Invalid Input! Please Check", { duration: 2000 });
       }
       //--------------------------------------------------Register
     } else if (form === "Register") {
@@ -289,23 +297,33 @@ function LogRes() {
           password: Userpassword,
           tosAgreement: Useragree,
         };
-        createUserData(Userdata).then((result) => {
-          if (result) {
-            createUserToken(Userphone, Userpassword).then((token) => {
-              if (token) {
-                localStorage.setItem("token", token.id);
-                delete Userdata.password;
-                setuserData(Userdata);
-                setisLoggedin(true);
-              }
-            });
+        const result = await createUserData(Userdata);
+        if (result) {
+          const token = await toast.promise(
+            createUserToken(Userphone, Userpassword),
+            {
+              loading: "Signingup Please Wait!",
+              success: "REgistered Successfully",
+              error: "Something went Wrong Please Try again!",
+            }
+          );
+          if (token) {
+            localStorage.setItem("token", token.id);
+            delete Userdata.password;
+            setuserData(Userdata);
+            setisLoggedin(true);
+            toast.success("LoggedIn Successfully", { duration: 2000 });
+          } else {
+            toast.error("Something Went Wrong!", { duration: 2000 });
           }
-        });
+        } else {
+          toast.error("Something Went Wrong!", { duration: 2000 });
+        }
       } else {
-        alert("Invalid Input! Please Check");
+        toast.error("Invalid Input! Please Check", { duration: 2000 });
       }
     } else {
-      alert("Invalid Input");
+      toast.error("Invalid Input", { duration: 2000 });
     }
   };
 

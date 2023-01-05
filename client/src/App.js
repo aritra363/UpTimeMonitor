@@ -4,35 +4,37 @@ import Dashboard from "./Component/Dashboard";
 import { LoginPrivateRoute } from "./PrivateRoute/LoginPrivateRoute";
 import { MainProvider } from "./Context/MainState";
 import { DashboardPrivateRoute } from "./PrivateRoute/DashboardPrivateRoute";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-      <MainProvider>
-        <Router>
-          <div>
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={
-                  <DashboardPrivateRoute>
-                    <LogRes />
-                  </DashboardPrivateRoute>
-                }
-              />
-              <Route
-                exact
-                path="/Dashboard"
-                element={
-                  <LoginPrivateRoute>
-                    <Dashboard />
-                  </LoginPrivateRoute>
-                }
-              />
-            </Routes>
-          </div>
-        </Router>
-      </MainProvider>
+    <MainProvider>
+      <Toaster position="top-center" reverseOrder={true} />
+      <Router>
+        <div>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <DashboardPrivateRoute>
+                  <LogRes />
+                </DashboardPrivateRoute>
+              }
+            />
+            <Route
+              exact
+              path="/Dashboard"
+              element={
+                <LoginPrivateRoute>
+                  <Dashboard />
+                </LoginPrivateRoute>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </MainProvider>
   );
 }
 
