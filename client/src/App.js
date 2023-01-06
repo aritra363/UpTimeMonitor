@@ -2,9 +2,12 @@ import LogRes from "./Component/LogRes";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./Component/Dashboard";
 import { LoginPrivateRoute } from "./PrivateRoute/LoginPrivateRoute";
+
 import { MainProvider } from "./Context/MainState";
 import { DashboardPrivateRoute } from "./PrivateRoute/DashboardPrivateRoute";
+import { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Popup from "reactjs-popup";
 
 function App() {
   return (

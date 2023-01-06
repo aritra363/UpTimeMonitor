@@ -264,6 +264,7 @@ function LogRes() {
             }
           );
           if (UserObj) {
+            UserObj.password = Userpassword;
             setuserData(UserObj);
             setisLoggedin(true);
             localStorage.setItem("token", token.id);
@@ -309,7 +310,7 @@ function LogRes() {
           );
           if (token) {
             localStorage.setItem("token", token.id);
-            delete Userdata.password;
+            Userdata.checks = [];
             setuserData(Userdata);
             setisLoggedin(true);
             toast.success("LoggedIn Successfully", { duration: 2000 });

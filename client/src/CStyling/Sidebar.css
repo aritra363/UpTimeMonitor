@@ -37,7 +37,13 @@
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 .delete-option {
-  color:red;
+  color: red;
   font-weight: bold;
   text-decoration: underline 2px;
+}
+.btn {
+  border: 0;
+}
+.button {
+  text-align: right;
 }
