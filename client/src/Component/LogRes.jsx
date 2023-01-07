@@ -10,6 +10,7 @@ import checkUserToken from "../Request/checkUserToken";
 import fetchUserData from "../Request/fetchUserData";
 import createUserToken from "../Request/createUserToken";
 import createUserData from "../Request/createUserData";
+import { AiTwotoneEdit, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 function LogRes() {
   //state for token and isloggedin
@@ -33,6 +34,13 @@ function LogRes() {
   //state for agreement field
   const [agree, setagree] = useState(false);
 
+  const [prevPassVisibilty, setprevPassVisibilty] = useState(false);
+
+  //prev password Visibility
+  const prevPassVisibiltyHandler = () => {
+    setprevPassVisibilty((prev) => !prev);
+  };
+
   //on click form Change
   const formChangeHandler = () => {
     if (form === "login") setform("Register");
@@ -42,6 +50,7 @@ function LogRes() {
     setphone("");
     setpassword("");
     setagree(false);
+    setprevPassVisibilty(false);
   };
 
   //on change handler for all input fields
@@ -116,14 +125,23 @@ function LogRes() {
       <label className="sr-only" htmlFor="inlineFormInput">
         Password
       </label>
-      <input
-        type="password"
-        className="form-control mb-2"
-        id="inlineFormInput"
-        placeholder="********"
-        onChange={passwordChangeHandler}
-        value={password}
-      />
+      <div className="input-group mb-3">
+        <input
+          type={!prevPassVisibilty ? "password" : "text"}
+          className="form-control "
+          id="inlineFormInput"
+          placeholder="********"
+          onChange={passwordChangeHandler}
+          value={password}
+        />
+        <span
+          className="input-group-text"
+          onClick={prevPassVisibiltyHandler}
+          style={{ cursor: "pointer" }}
+        >
+          {prevPassVisibilty ? <AiFillEye /> : <AiFillEyeInvisible />}
+        </span>
+      </div>
     </>
   );
   // JSX element of Registration Form
@@ -201,14 +219,24 @@ function LogRes() {
       <label className="sr-only" htmlFor="inlineFormInput">
         Password
       </label>
-      <input
-        type="password"
-        className="form-control mb-2"
-        id="inlineFormInput"
-        placeholder="********"
-        onChange={passwordChangeHandler}
-        value={password}
-      />
+      <div className="input-group mb-3">
+        <input
+          type={!prevPassVisibilty ? "password" : "text"}
+          className="form-control"
+          id="inlineFormInput"
+          placeholder="********"
+          onChange={passwordChangeHandler}
+          value={password}
+        />
+        <span
+          className="input-group-text"
+          onClick={prevPassVisibiltyHandler}
+          style={{ cursor: "pointer" }}
+        >
+          {prevPassVisibilty ? <AiFillEye /> : <AiFillEyeInvisible />}
+        </span>
+      </div>
+
       <div
         className="Warnings"
         style={{
@@ -309,10 +337,10 @@ function LogRes() {
             }
           );
           if (token) {
-            localStorage.setItem("token", token.id);
             Userdata.checks = [];
             setuserData(Userdata);
             setisLoggedin(true);
+            localStorage.setItem("token", token.id);
             toast.success("LoggedIn Successfully", { duration: 2000 });
           } else {
             toast.error("Something Went Wrong!", { duration: 2000 });

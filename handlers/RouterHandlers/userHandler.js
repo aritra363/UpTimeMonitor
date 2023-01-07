@@ -166,8 +166,7 @@ handler._users.put = (RequestProperties, callback) => {
       ? RequestProperties.body.lastName
       : false;
   const phone =
-    typeof RequestProperties.body.phone === "number" &&
-    JSON.stringify(RequestProperties.body.phone).length === 12
+    typeof RequestProperties.body.phone === "string"
       ? RequestProperties.body.phone
       : false;
 
