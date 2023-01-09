@@ -165,10 +165,7 @@ handler._users.put = (RequestProperties, callback) => {
     RequestProperties.body.lastName.trim().length < 20
       ? RequestProperties.body.lastName
       : false;
-  const phone =
-    typeof RequestProperties.body.phone === "string"
-      ? RequestProperties.body.phone
-      : false;
+  const phone = RequestProperties.body.phone;
 
   const password =
     typeof RequestProperties.body.password === "string" &&

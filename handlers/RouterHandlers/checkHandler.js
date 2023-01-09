@@ -33,7 +33,7 @@ handler.checkHandler = (RequestProperties, callback) => {
 handler._check = {};
 
 //for Post operations
-handler._check.post = (RequestProperties, callback) => {
+handler._check.post = async (RequestProperties, callback) => {
   //validate input
   let protocol =
     typeof RequestProperties.body.protocol === "string" &&
@@ -152,8 +152,8 @@ handler._check.post = (RequestProperties, callback) => {
 //for Get operations
 handler._check.get = (RequestProperties, callback) => {
   const checkId =
-    typeof RequestProperties.query.id === "string"
-      ? RequestProperties.query.id
+    typeof RequestProperties.query.checkid === "string"
+      ? RequestProperties.query.checkid
       : false;
   if (checkId) {
     data.read("checks", checkId, (err, checkData) => {
@@ -166,7 +166,6 @@ handler._check.get = (RequestProperties, callback) => {
         tokenhandler._token.verify(tokenId, phone, (tokenIsValid) => {
           if (tokenIsValid) {
             callback(200, utils.parseJSON(checkData));
-            console.log(checkData);
           } else {
             callback(403, { message: "Authentication Problem" });
           }

@@ -1,4 +1,4 @@
-//Create user data using token and phone no.
+//Edit user data using token and phone no.
 
 const editUserData = async (Userdata, token) => {
   try {
@@ -12,6 +12,7 @@ const editUserData = async (Userdata, token) => {
     if (userResponse.status === 200) {
       return true;
     } else {
+      console.log(typeof Userdata.phone);
       alert("Invalid FirstName / LastName/ Password");
       return false;
     }
