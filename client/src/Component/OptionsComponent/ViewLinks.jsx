@@ -3,42 +3,38 @@ import { useContext, useEffect, useState } from "react";
 import MainState from "../../Context/MainState";
 import { IoLinkSharp } from "react-icons/io5";
 import getLinks from "../../Request/getLinks";
+import SingleLink from "./SingleLink";
 
 function ViewLinks() {
   const { userData } = useContext(MainState);
-  //localState for check Data
-  const [checkData, setcheckData] = useState([]);
-  const [checkJSX, setcheckJSX] = useState(<p></p>);
+  //local state for loading
+  const [isloading, setisloading] = useState(true);
+  //local state for link component
+  const [linkComp, setlinkComp] = useState(<p>Not Found</p>);
   useEffect(() => {
-    const showData = async () => {
-      if (checkData.length === 0) {
-        await setcheckJSX(<p>No check Found</p>);
+    const getCheckData = () => {
+      let checkobj;
+      if (userData["checks"].length === 0) {
+        checkobj = [];
       } else {
-        await setcheckJSX(
-          checkData.map((item) => {
-            return <p>{item.id}</p>;
-          })
-        );
-      }
-      const getCheckData = async () => {
-        let checkobj;
-        if (userData["checks"].length === 0) {
-          setcheckData(checkobj);
-        } else {
-          let checkobj = await Promise.all(
-            userData["checks"].map(async (item) => {
-              const res = await getLinks(item, localStorage.getItem("token"));
-              return res;
+        const checkobjpromise = userData["checks"].map((item) => {
+          const res = getLinks(item, localStorage.getItem("token"));
+          return res;
+        });
+        Promise.all(checkobjpromise).then((checkobj) => {
+          setlinkComp(
+            checkobj.map((item, index) => {
+              return <SingleLink key={index} id={item.id} num={index + 1} />;
             })
           );
-          setcheckData(checkobj);
-          showData();
-        }
-      };
-      getCheckData();
-    };
-  }, []);
 
+          setisloading(false);
+        });
+      }
+    };
+    getCheckData();
+  }, []);
+  useEffect(() => {}, []);
   return (
     <div className="card">
       <div className="card-header">
@@ -50,8 +46,11 @@ function ViewLinks() {
           </span>
         </div>
       </div>
-      <div className="card-body">
-        <div className="card-text">{checkJSX}</div>
+      <div
+        className="card-body"
+        style={{ overflow: "scroll", maxHeight: "75vh" }}
+      >
+        {isloading ? <p>Loading</p> : linkComp}
       </div>
     </div>
   );
