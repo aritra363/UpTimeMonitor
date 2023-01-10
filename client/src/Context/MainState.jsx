@@ -14,9 +14,17 @@ export const MainProvider = ({ children }) => {
   const [linksActive, setlinksActive] = useState(true);
   const [optionComponent, setoptionComponent] = useState(<ViewLinks />);
   const [intID, setintID] = useState("");
+  //state for link delete id
+  const [delLinkId, setdelLinkId] = useState("");
+  //state to open close modal
+  const [modal, setmodal] = useState(false);
   return (
     <MainState.Provider
       value={{
+        modal,
+        setmodal,
+        delLinkId,
+        setdelLinkId,
         isLoggedin,
         setisLoggedin,
         userData,
