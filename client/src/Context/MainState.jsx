@@ -13,14 +13,23 @@ export const MainProvider = ({ children }) => {
   const [settingsActive, setsettingsActive] = useState(false);
   const [linksActive, setlinksActive] = useState(true);
   const [optionComponent, setoptionComponent] = useState(<ViewLinks />);
+  //interval id for tokenexpiry
   const [intID, setintID] = useState("");
+  //interval id for links
+  const [linkintID, setlinkintID] = useState("");
   //state for link delete id
   const [delLinkId, setdelLinkId] = useState("");
   //state to open close modal
   const [modal, setmodal] = useState(false);
+  //state to notify that need a api call to get links after(delete,edit,add)
+  const [needRefresh, setneedRefresh] = useState(false);
+  //state to control link timer
+  const [firstTimer, setfirstTimer] = useState(true);
   return (
     <MainState.Provider
       value={{
+        needRefresh,
+        setneedRefresh,
         modal,
         setmodal,
         delLinkId,
@@ -39,6 +48,10 @@ export const MainProvider = ({ children }) => {
         setoptionComponent,
         intID,
         setintID,
+        linkintID,
+        setlinkintID,
+        firstTimer,
+        setfirstTimer,
       }}
     >
       {children}

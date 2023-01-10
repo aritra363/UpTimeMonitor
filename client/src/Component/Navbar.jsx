@@ -28,6 +28,8 @@ function Navbar() {
     setoptionComponent,
     setintID,
     intID,
+    linkintID,
+    setlinkintID,
   } = useContext(MainState);
 
   const [time, settime] = useState("00:00:00");
@@ -37,6 +39,8 @@ function Navbar() {
     localStorage.removeItem("token");
     clearInterval(intID);
     clearInterval(intID - 1);
+    clearInterval(linkintID);
+    clearInterval(linkintID - 1);
     setuserData(undefined);
     setsidebar({
       Lists: ["View Links", "Edit Links"],

@@ -26,6 +26,8 @@ function Sidebar() {
     setlinksActive,
     settime,
     userData,
+    linkintID,
+    setlinkintID,
   } = useContext(MainState);
   const dashboardName = sidebar.Name;
   //State for the popup
@@ -69,37 +71,6 @@ function Sidebar() {
         break;
       case "Delete My Account":
         setOpen((prev) => !prev);
-
-        /* if (confirmation) {
-          //all logout operations
-          const result = await toast.promise(
-            deleteAccount(userData.phone, localStorage.getItem("token")),
-            {
-              loading: "Deleting Account Wait!",
-            }
-          );
-          if (result) {
-            //deleted Successfully
-            setisLoggedin(false);
-            localStorage.removeItem("token");
-            clearInterval(intID);
-            clearInterval(intID - 1);
-            setuserData(undefined);
-            setsidebar({
-              Lists: ["View Links", "Edit Links"],
-              Name: "Links",
-            });
-            setsettingsActive(false);
-            setlinksActive(true);
-            //settime("00:00:00");
-            setoptionComponent(<ViewLinks />);
-            toast.success("Account Delete Successfully", { duration: 2000 });
-          } else {
-            toast.error("Cannot DElete Some thing went wrong!", {
-              duration: 2000,
-            });
-          }
-        } */
         break;
       case "View Links":
         setoptionComponent(() => {
@@ -163,6 +134,8 @@ function Sidebar() {
         localStorage.removeItem("token");
         clearInterval(intID);
         clearInterval(intID - 1);
+        clearInterval(linkintID);
+        clearInterval(linkintID - 1);
         setuserData(undefined);
         setsidebar({
           Lists: ["View Links", "Edit Links"],

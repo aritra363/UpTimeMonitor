@@ -8,50 +8,75 @@ import SingleLink from "./SingleLink";
 import { toast } from "react-hot-toast";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import "../../CStyling/ViewLinks.css";
 
 function ViewLinks() {
-  const { userData, modal, setmodal, delLinkId, setdelLinkId } =
-    useContext(MainState);
+  const {
+    userData,
+    modal,
+    setmodal,
+    delLinkId,
+    setdelLinkId,
+    needRefresh,
+    setneedRefresh,
+    linkintID,
+    setlinkintID,
+    firstTimer,
+    setfirstTimer,
+  } = useContext(MainState);
   //local state for loading
   const [isloading, setisloading] = useState(true);
   //local state for link component
   const [linkComp, setlinkComp] = useState(<p>No Links,Please Add</p>);
-  useEffect(() => {
-    const getCheckData = () => {
-      let checkobj;
-      if (userData["checks"].length === 0) {
-        checkobj = [];
-        setisloading(false);
-      } else {
-        const checkobjpromise = userData["checks"].map((item) => {
-          const res = getLinks(item, localStorage.getItem("token"));
-          return res;
-        });
-        Promise.all(checkobjpromise).then((checkobj) => {
-          setlinkComp(
-            checkobj.map((item, index) => {
-              return (
-                <SingleLink
-                  key={index}
-                  id={item.id}
-                  num={index + 1}
-                  protocol={item.protocol}
-                  method={item.method}
-                  url={item.url}
-                  successcode={item.successcode}
-                  timeout={item.timeout}
-                  linkState={item.state}
-                />
-              );
-            })
-          );
+  const getCheckData = () => {
+    setisloading(true);
+    let checkobj;
+    if (userData["checks"].length === 0) {
+      checkobj = [];
+      setisloading(false);
+    } else {
+      const checkobjpromise = userData["checks"].map((item) => {
+        const res = getLinks(item, localStorage.getItem("token"));
+        return res;
+      });
+      Promise.all(checkobjpromise).then((checkobj) => {
+        setlinkComp(
+          checkobj.map((item, index) => {
+            return (
+              <SingleLink
+                key={index}
+                id={item.id}
+                num={index + 1}
+                protocol={item.protocol}
+                method={item.method}
+                url={item.url}
+                successcode={item.successcode}
+                timeout={item.timeout}
+                linkState={item.state}
+              />
+            );
+          })
+        );
 
-          setisloading(false);
-        });
-      }
-    };
-    getCheckData();
+        setisloading(false);
+      });
+    }
+  };
+  useEffect(() => {
+    if (firstTimer) {
+      const intervalId = setInterval(() => {
+        getCheckData();
+      }, 1000 * 60);
+      setlinkintID(intervalId);
+      setfirstTimer(false);
+    } else {
+      getCheckData();
+    }
   }, []);
+  useEffect(() => {
+    getCheckData();
+  }, [needRefresh]);
+
   const [popupInput, setpopupInput] = useState("");
   const closeModal = () => {
     setmodal(false);
@@ -74,6 +99,7 @@ function ViewLinks() {
         //deleted Successfully
         userData["checks"].splice(userData["checks"].indexOf(delLinkId), 1);
         toast.success("Link Deleted Successfully", { duration: 2000 });
+        setneedRefresh((prev) => !prev);
       } else {
         toast.error("Cannot Delete Some thing went wrong!", {
           duration: 2000,
@@ -130,7 +156,22 @@ function ViewLinks() {
           className="card-body"
           style={{ overflow: "scroll", maxHeight: "75vh" }}
         >
-          {isloading ? <p>Loading</p> : linkComp}
+          {isloading ? (
+            <div className="h-100 d-flex align-items-center justify-content-center">
+              <div className="lds-roller">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          ) : (
+            linkComp
+          )}
         </div>
       </div>
     </>
