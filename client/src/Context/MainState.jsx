@@ -7,7 +7,7 @@ export const MainProvider = ({ children }) => {
   const [isLoggedin, setisLoggedin] = useState(false);
   const [userData, setuserData] = useState(undefined);
   const [sidebar, setsidebar] = useState({
-    Lists: ["View Links", "Edit Links"],
+    Lists: ["View Links", "Add Links", "Edit Links"],
     Name: "Links",
   });
   const [settingsActive, setsettingsActive] = useState(false);

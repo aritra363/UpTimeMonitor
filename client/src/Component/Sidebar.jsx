@@ -8,6 +8,7 @@ import ViewProfile from "./OptionsComponent/ViewProfile";
 import EditProfile from "./OptionsComponent/EditProfile";
 import ChangePassword from "./OptionsComponent/ChangePassword";
 import ViewLinks from "./OptionsComponent/ViewLinks";
+import AddLinks from "./OptionsComponent/AddLinks";
 import EditLinks from "./OptionsComponent/EditLinks";
 import deleteAccount from "../Request/deleteAccount";
 import { toast } from "react-hot-toast";
@@ -28,6 +29,8 @@ function Sidebar() {
     userData,
     linkintID,
     setlinkintID,
+    yes,
+    setyes,
   } = useContext(MainState);
   const dashboardName = sidebar.Name;
   //State for the popup
@@ -79,6 +82,24 @@ function Sidebar() {
               <ViewLinks />
             </>
           );
+        });
+        break;
+      case "Add Links":
+        setoptionComponent(() => {
+          if (userData["checks"].length < 5) {
+            return (
+              <>
+                <AddLinks />
+              </>
+            );
+          } else {
+            toast.error("Cannot add more than 5 Links", { duration: 2000 });
+            return (
+              <>
+                <ViewLinks />
+              </>
+            );
+          }
         });
         break;
       case "Edit Links":
@@ -138,7 +159,7 @@ function Sidebar() {
         clearInterval(linkintID - 1);
         setuserData(undefined);
         setsidebar({
-          Lists: ["View Links", "Edit Links"],
+          Lists: ["View Links", "Add Links", "Edit Links"],
           Name: "Links",
         });
         setsettingsActive(false);
@@ -147,7 +168,7 @@ function Sidebar() {
         setoptionComponent(<ViewLinks />);
         toast.success("Account Delete Successfully", { duration: 2000 });
       } else {
-        toast.error("Cannot DElete Some thing went wrong!", {
+        toast.error("Cannot Delete Some thing went wrong!", {
           duration: 2000,
         });
       }

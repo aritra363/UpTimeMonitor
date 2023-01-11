@@ -6,6 +6,7 @@ import { FaUserAlt, FaEdit } from "react-icons/fa";
 import { AiTwotoneEdit, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { RiLockPasswordLine, RiLockPasswordFill } from "react-icons/ri";
 import { toast } from "react-hot-toast";
+import "../../CStyling/EditProfile.css";
 
 function EditProfile() {
   const { userData } = useContext(MainState);
@@ -308,7 +309,10 @@ function EditProfile() {
               </div>
             </form>
             <div className="row justify-content-end">
-              <button className="col-4 btn btn-primary" onClick={updateHandler}>
+              <button
+                className="col-4 btn btn-primary effect"
+                onClick={updateHandler}
+              >
                 <i>
                   {" "}
                   <AiTwotoneEdit />
