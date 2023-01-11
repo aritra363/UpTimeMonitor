@@ -34,6 +34,7 @@ function ViewLinks() {
     if (userData["checks"].length === 0) {
       checkobj = [];
       setisloading(false);
+      setlinkComp(<p>No Links,Please Add</p>);
     } else {
       const checkobjpromise = userData["checks"].map((item) => {
         const res = getLinks(item, localStorage.getItem("token"));

@@ -136,4 +136,8 @@ function SingleLink({
   );
 }
 
+SingleLink.defaultProps = {
+  linkState: "down",
+};
+
 export default SingleLink;
