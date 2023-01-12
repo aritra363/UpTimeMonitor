@@ -94,6 +94,7 @@ function AddLinks() {
             </>
           );
         });
+        setneedRefresh((prev) => !prev);
         toast.success("Link Added successfully", { duration: 2000 });
       }
     } else {

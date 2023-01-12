@@ -14,8 +14,14 @@ import { AiTwotoneEdit, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 function LogRes() {
   //state for token and isloggedin
-  const { isLoggedin, setisLoggedin, setuserData, userData, tokenExp } =
-    useContext(MainState);
+  const {
+    isLoggedin,
+    setisLoggedin,
+    setuserData,
+    userData,
+    tokenExp,
+    setfirstTimer,
+  } = useContext(MainState);
   //state for toggling login and reegistartion form
   const [form, setform] = useState("login");
 
@@ -296,6 +302,7 @@ function LogRes() {
             setuserData(UserObj);
             setisLoggedin(true);
             localStorage.setItem("token", token.id);
+            setfirstTimer(true);
             toast.success("Loggedin successfully", { duration: 2000 });
           } else {
             setisLoggedin(false);
@@ -340,6 +347,7 @@ function LogRes() {
             Userdata.checks = [];
             setuserData(Userdata);
             setisLoggedin(true);
+            setfirstTimer(true);
             localStorage.setItem("token", token.id);
             toast.success("LoggedIn Successfully", { duration: 2000 });
           } else {
@@ -364,6 +372,7 @@ function LogRes() {
           if (userObj) {
             setuserData(userObj);
             setisLoggedin(true);
+            setfirstTimer(true);
           } else {
             setisLoggedin(false);
           }
@@ -371,7 +380,6 @@ function LogRes() {
       } else {
         setisLoggedin(false);
         localStorage.removeItem("token");
-        //alert("Invalid token or Toked Expired");
       }
     });
   }, []);

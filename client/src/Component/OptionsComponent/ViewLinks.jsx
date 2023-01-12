@@ -23,6 +23,7 @@ function ViewLinks() {
     setlinkintID,
     firstTimer,
     setfirstTimer,
+    setoptionComponent,
   } = useContext(MainState);
   //local state for loading
   const [isloading, setisloading] = useState(true);
@@ -58,7 +59,7 @@ function ViewLinks() {
             );
           })
         );
-
+        console.log("called");
         setisloading(false);
       });
     }
@@ -67,6 +68,7 @@ function ViewLinks() {
     if (firstTimer) {
       const intervalId = setInterval(() => {
         getCheckData();
+        console.log("refreshed");
       }, 1000 * 60);
       setlinkintID(intervalId);
       setfirstTimer(false);

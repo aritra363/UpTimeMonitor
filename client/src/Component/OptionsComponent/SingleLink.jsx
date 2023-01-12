@@ -4,13 +4,13 @@ import MainState from "../../Context/MainState";
 import { IoUnlinkSharp, IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { MdOutlineHttp, MdAccessTimeFilled } from "react-icons/md";
-import { FcEmptyTrash } from "react-icons/fc";
+import { FcEmptyTrash, FcEditImage } from "react-icons/fc";
 import {
   BsSignpost2Fill,
   BsFillArrowDownCircleFill,
   BsFillArrowUpCircleFill,
 } from "react-icons/bs";
-import { IoTimeOutline } from "react-icons/io5";
+import EditLinks from "./EditLinks";
 import "../../CStyling/SingleLink.css";
 import red from "../../icons/red.png";
 import green from "../../icons/green.png";
@@ -25,7 +25,8 @@ function SingleLink({
   timeout,
   linkState,
 }) {
-  const { delLinkId, setdelLinkId, setmodal, modal } = useContext(MainState);
+  const { delLinkId, setdelLinkId, setmodal, modal, setoptionComponent } =
+    useContext(MainState);
   //mapping the success code
   const Scode = successcode.map((item, index) => {
     if (index === 0) {
@@ -43,6 +44,29 @@ function SingleLink({
     setmodal(true);
     setdelLinkId(linkId);
   };
+  const editLinkHandler = (
+    linkid,
+    linkurl,
+    linkmethod,
+    linkprotocol,
+    linksuccesscode,
+    linktimeout
+  ) => {
+    setoptionComponent(() => {
+      return (
+        <>
+          <EditLinks
+            linkid={linkid}
+            linkurl={linkurl}
+            linkmethod={linkmethod}
+            linkprotocol={linkprotocol}
+            linksuccesscode={linksuccesscode}
+            linktimeout={linktimeout}
+          />
+        </>
+      );
+    });
+  };
   return (
     <div className="card">
       <div className="card-header d-flex p-2 bd-highlight flex-row mb-3">
@@ -58,6 +82,15 @@ function SingleLink({
         </div>
 
         <div className="d-flex p-2 flex-fill justify-content-end">
+          <span
+            className="bin bin-01"
+            onClick={() =>
+              editLinkHandler(id, url, method, protocol, successcode, timeout)
+            }
+          >
+            <FcEditImage size={30} />
+          </span>
+          &nbsp;&nbsp;
           <span className="bin bin-01" onClick={() => deleteLinkHandler(id)}>
             <FcEmptyTrash size={30} />
           </span>

@@ -43,7 +43,7 @@ function Navbar() {
     clearInterval(linkintID - 1);
     setuserData(undefined);
     setsidebar({
-      Lists: ["View Links", "Add Links", "Edit Links"],
+      Lists: ["View Links", "Add Links"],
       Name: "Links",
     });
     setsettingsActive(false);
@@ -71,7 +71,7 @@ function Navbar() {
   };
   const linksHandler = () => {
     setsidebar({
-      Lists: ["View Links", "Add Links", "Edit Links"],
+      Lists: ["View Links", "Add Links"],
       Name: "Links",
     });
     setsettingsActive(false);
