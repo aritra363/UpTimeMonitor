@@ -21,7 +21,8 @@ function EditLinks({
   linktimeout,
 }) {
   const navigate = useNavigate();
-  const { userData, setoptionComponent,setneedRefresh } = useContext(MainState);
+  const { userData, setoptionComponent, setneedRefresh } =
+    useContext(MainState);
   //state for url
   const [url, seturl] = useState(linkurl);
   //state for protocol
@@ -118,326 +119,317 @@ function EditLinks({
           </span>
         </div>
       </div>
-      {userData["checks"].length < 5 ? (
-        <div
-          className="card-body"
-          style={{ overflow: "scroll", maxHeight: "75vh" }}
-        >
-          <div className="card-text">
-            <div className="form-group">
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  <IoUnlinkSharp />
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="URL"
-                  aria-label="Url"
-                  aria-describedby="addon-wrapping"
-                  onChange={urlHandler}
-                  value={url}
-                />
-              </div>
-              <small className="text-muted">
-                Provide the URL (without http or https and only http and https
-                link allowed)
-              </small>
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  <MdOutlineHttp />
-                </span>
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                  onChange={protocolHandler}
-                >
-                  <option
-                    value="http"
-                    selected={protocol === "http" ? true : false}
-                  >
-                    http
-                  </option>
-                  <option
-                    value="https"
-                    selected={protocol === "https" ? true : false}
-                  >
-                    https
-                  </option>
-                </select>
-              </div>
-              <small className="text-muted">
-                Provide the Protocol http or https (default https)
-              </small>
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  <BsSignpost2Fill />
-                </span>
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                  onChange={methodHandler}
-                >
-                  <option
-                    value="put"
-                    selected={method === "put" ? true : false}
-                  >
-                    PUT
-                  </option>
-                  <option
-                    value="get"
-                    selected={method === "get" ? true : false}
-                  >
-                    GET
-                  </option>
 
-                  <option
-                    value="delete"
-                    selected={method === "delete" ? true : false}
-                  >
-                    DELETE
-                  </option>
-                  <option
-                    value="post"
-                    selected={method === "post" ? true : false}
-                  >
-                    POST
-                  </option>
-                </select>
-              </div>
-              <small className="text-muted">
-                Provide the Method (default GET)
-              </small>
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  <MdAccessTimeFilled />
-                </span>
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                  onChange={timeoutHandler}
-                >
-                  <option value="5" selected={timeout === 5 ? true : false}>
-                    5
-                  </option>
-                  <option value="4" selected={timeout === 4 ? true : false}>
-                    4
-                  </option>
-                  <option value="3" selected={timeout === 3 ? true : false}>
-                    3
-                  </option>
-                  <option value="2" selected={timeout === 2 ? true : false}>
-                    2
-                  </option>
-                  <option value="1" selected={timeout === 1 ? true : false}>
-                    1
-                  </option>
-                </select>
-                <span className="input-group-text" id="addon-wrapping">
-                  Seconds
-                </span>
-              </div>
-              <small className="text-muted">
-                Provide the Timeout Seconds max 5 min 1<br />
-                Timeout is the time in seconds upto which the server will wait
-                for response
-              </small>
-              <br />
-              <span style={{ fontWeight: "bold", fontSize: "20px" }}>
-                <label className="form-label">Success Codes</label>
+      <div
+        className="card-body"
+        style={{ overflow: "scroll", maxHeight: "75vh" }}
+      >
+        <div className="card-text">
+          <div className="form-group">
+            <div className="input-group flex-nowrap">
+              <span className="input-group-text" id="addon-wrapping">
+                <IoUnlinkSharp />
               </span>
-              <div
-                className="card-body"
-                style={{
-                  border: "1px solid #ebebeb",
-                  backgroundColor: "#ebebeb",
-                  borderRadius: "5px",
-                }}
+              <input
+                type="text"
+                className="form-control"
+                placeholder="URL"
+                aria-label="Url"
+                aria-describedby="addon-wrapping"
+                onChange={urlHandler}
+                value={url}
+              />
+            </div>
+            <small className="text-muted">
+              Provide the URL (without http or https and only http and https
+              link allowed)
+            </small>
+            <div className="input-group flex-nowrap">
+              <span className="input-group-text" id="addon-wrapping">
+                <MdOutlineHttp />
+              </span>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                onChange={protocolHandler}
               >
-                <div className="card-text">
-                  <div className="input-group flex-nowrap align-items-center justify-content-center">
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox1"
-                        value="200"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(200) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox1"
-                      >
-                        200
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox2"
-                        value="201"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(201) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox2"
-                      >
-                        201
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox3"
-                        value="202"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(202) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox3"
-                      >
-                        202
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox1"
-                        value="203"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(203) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox1"
-                      >
-                        203
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox2"
-                        value="204"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(204) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox2"
-                      >
-                        204
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox3"
-                        value="205"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(205) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox3"
-                      >
-                        205
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox1"
-                        value="206"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(206) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox1"
-                      >
-                        206
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox2"
-                        value="207"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(207) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox2"
-                      >
-                        207
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox3"
-                        value="208"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(208) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox3"
-                      >
-                        208
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="inlineCheckbox1"
-                        value="226"
-                        onChange={successcodeHandler}
-                        checked={successcode.includes(226) ? true : false}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineCheckbox1"
-                      >
-                        226
-                      </label>
-                    </div>
+                <option
+                  value="http"
+                  selected={protocol === "http" ? true : false}
+                >
+                  http
+                </option>
+                <option
+                  value="https"
+                  selected={protocol === "https" ? true : false}
+                >
+                  https
+                </option>
+              </select>
+            </div>
+            <small className="text-muted">
+              Provide the Protocol http or https (default https)
+            </small>
+            <div className="input-group flex-nowrap">
+              <span className="input-group-text" id="addon-wrapping">
+                <BsSignpost2Fill />
+              </span>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                onChange={methodHandler}
+              >
+                <option value="put" selected={method === "put" ? true : false}>
+                  PUT
+                </option>
+                <option value="get" selected={method === "get" ? true : false}>
+                  GET
+                </option>
+
+                <option
+                  value="delete"
+                  selected={method === "delete" ? true : false}
+                >
+                  DELETE
+                </option>
+                <option
+                  value="post"
+                  selected={method === "post" ? true : false}
+                >
+                  POST
+                </option>
+              </select>
+            </div>
+            <small className="text-muted">
+              Provide the Method (default GET)
+            </small>
+            <div className="input-group flex-nowrap">
+              <span className="input-group-text" id="addon-wrapping">
+                <MdAccessTimeFilled />
+              </span>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                onChange={timeoutHandler}
+              >
+                <option value="5" selected={timeout === 5 ? true : false}>
+                  5
+                </option>
+                <option value="4" selected={timeout === 4 ? true : false}>
+                  4
+                </option>
+                <option value="3" selected={timeout === 3 ? true : false}>
+                  3
+                </option>
+                <option value="2" selected={timeout === 2 ? true : false}>
+                  2
+                </option>
+                <option value="1" selected={timeout === 1 ? true : false}>
+                  1
+                </option>
+              </select>
+              <span className="input-group-text" id="addon-wrapping">
+                Seconds
+              </span>
+            </div>
+            <small className="text-muted">
+              Provide the Timeout Seconds max 5 min 1<br />
+              Timeout is the time in seconds upto which the server will wait for
+              response
+            </small>
+            <br />
+            <span style={{ fontWeight: "bold", fontSize: "20px" }}>
+              <label className="form-label">Success Codes</label>
+            </span>
+            <div
+              className="card-body"
+              style={{
+                border: "1px solid #ebebeb",
+                backgroundColor: "#ebebeb",
+                borderRadius: "5px",
+              }}
+            >
+              <div className="card-text">
+                <div className="input-group flex-nowrap align-items-center justify-content-center">
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox1"
+                      value="200"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(200) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox1"
+                    >
+                      200
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox2"
+                      value="201"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(201) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox2"
+                    >
+                      201
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox3"
+                      value="202"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(202) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox3"
+                    >
+                      202
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox1"
+                      value="203"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(203) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox1"
+                    >
+                      203
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox2"
+                      value="204"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(204) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox2"
+                    >
+                      204
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox3"
+                      value="205"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(205) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox3"
+                    >
+                      205
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox1"
+                      value="206"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(206) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox1"
+                    >
+                      206
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox2"
+                      value="207"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(207) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox2"
+                    >
+                      207
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox3"
+                      value="208"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(208) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox3"
+                    >
+                      208
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox1"
+                      value="226"
+                      onChange={successcodeHandler}
+                      checked={successcode.includes(226) ? true : false}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="inlineCheckbox1"
+                    >
+                      226
+                    </label>
                   </div>
                 </div>
               </div>
-              <small className="text-muted">Provide the Success codes</small>
             </div>
-            <div className="row justify-content-end">
-              <button
-                className="col-4 btn btn-primary effect"
-                onClick={addLinkHandler}
-              >
-                <i>
-                  {" "}
-                  <FaEdit />
-                </i>{" "}
-                Update
-              </button>
-            </div>
+            <small className="text-muted">Provide the Success codes</small>
+          </div>
+          <div className="row justify-content-end">
+            <button
+              className="col-4 btn btn-primary effect"
+              onClick={addLinkHandler}
+            >
+              <i>
+                {" "}
+                <FaEdit />
+              </i>{" "}
+              Update
+            </button>
           </div>
         </div>
-      ) : (
-        <p style={{ color: "red" }}>Not more than 5 Links allowed</p>
-      )}
+      </div>
     </div>
   );
 }

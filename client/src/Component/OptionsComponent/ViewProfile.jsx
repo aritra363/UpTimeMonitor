@@ -19,7 +19,7 @@ function ViewProfile() {
       </div>
       <div className="card-body">
         <div className="card-text">
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div>
             <FaUserAlt />
             &nbsp;
             <span style={{ fontWeight: "bold" }}>Name</span> :{" "}

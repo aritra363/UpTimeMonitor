@@ -9,7 +9,7 @@ import EditProfile from "./OptionsComponent/EditProfile";
 import ChangePassword from "./OptionsComponent/ChangePassword";
 import ViewLinks from "./OptionsComponent/ViewLinks";
 import AddLinks from "./OptionsComponent/AddLinks";
-import EditLinks from "./OptionsComponent/EditLinks";
+import deleteLink from "../Request/deleteLink";
 import deleteAccount from "../Request/deleteAccount";
 import { toast } from "react-hot-toast";
 import Popup from "reactjs-popup";
@@ -25,12 +25,8 @@ function Sidebar() {
     setsidebar,
     setsettingsActive,
     setlinksActive,
-    settime,
     userData,
     linkintID,
-    setlinkintID,
-    yes,
-    setyes,
   } = useContext(MainState);
   const dashboardName = sidebar.Name;
   //State for the popup
@@ -102,7 +98,7 @@ function Sidebar() {
           }
         });
         break;
-      
+
       default:
         break;
     }
@@ -135,75 +131,82 @@ function Sidebar() {
   const deleteAccountHandler = async () => {
     if (popupInput.toLowerCase() === "delete") {
       //all logout operations
-      const result = await toast.promise(
-        deleteAccount(userData.phone, localStorage.getItem("token")),
-        {
-          loading: "Deleting Account Wait!",
+      //links delete
+      const checkobjpromise = userData["checks"].map((item) => {
+        const res = deleteLink(item, localStorage.getItem("token"));
+        return res;
+      });
+      Promise.all(checkobjpromise).then(() => {
+        const result = toast.promise(
+          deleteAccount(userData.phone, localStorage.getItem("token")),
+          {
+            loading: "Deleting Account Wait!",
+          }
+        );
+        if (result) {
+          //deleted Successfully
+          setisLoggedin(false);
+          localStorage.removeItem("token");
+          clearInterval(intID);
+          clearInterval(intID - 1);
+          clearInterval(linkintID);
+          clearInterval(linkintID - 1);
+          setuserData(undefined);
+          setsidebar({
+            Lists: ["View Links", "Add Links"],
+            Name: "Links",
+          });
+          setsettingsActive(false);
+          setlinksActive(true);
+          //settime("00:00:00");
+          setoptionComponent(<ViewLinks />);
+          toast.success("Account Delete Successfully", { duration: 2000 });
+        } else {
+          toast.error("Cannot Delete Some thing went wrong!", {
+            duration: 2000,
+          });
         }
-      );
-      if (result) {
-        //deleted Successfully
-        setisLoggedin(false);
-        localStorage.removeItem("token");
-        clearInterval(intID);
-        clearInterval(intID - 1);
-        clearInterval(linkintID);
-        clearInterval(linkintID - 1);
-        setuserData(undefined);
-        setsidebar({
-          Lists: ["View Links", "Add Links"],
-          Name: "Links",
-        });
-        setsettingsActive(false);
-        setlinksActive(true);
-        //settime("00:00:00");
-        setoptionComponent(<ViewLinks />);
-        toast.success("Account Delete Successfully", { duration: 2000 });
-      } else {
-        toast.error("Cannot Delete Some thing went wrong!", {
-          duration: 2000,
-        });
-      }
+      });
     }
   };
   return (
     <>
+      <Popup open={open} onClose={closeModal} modal>
+        <div>
+          <div className="modal-body">
+            <p>
+              Type <b>delete</b> in the below textbox to delete the Account
+            </p>
+          </div>
+          <div className="form-group flex-column">
+            <div className="input-group mb-3 flex-row d-flex justify-content-start">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="delete"
+                onChange={popupinputHandler}
+                value={popupInput}
+              />
+            </div>
+            <div
+              className="flex-row d-flex 
+              justify-content-end"
+            >
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={deleteAccountHandler}
+              >
+                delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </Popup>
       <nav
         id="sidebarMenu"
         className="collapse d-lg-block sidebar collapse bg-white"
       >
-        <Popup open={open} onClose={closeModal} modal>
-          <div>
-            <div className="modal-body">
-              <p>
-                Type <b>delete</b> in the below textbox to delete the Account
-              </p>
-            </div>
-            <div className="form-group flex-column">
-              <div className="input-group mb-3 flex-row d-flex justify-content-start">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="delete"
-                  onChange={popupinputHandler}
-                  value={popupInput}
-                />
-              </div>
-              <div
-                className="flex-row d-flex 
-              justify-content-end"
-              >
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={deleteAccountHandler}
-                >
-                  delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </Popup>
         <div className="position-sticky">
           <div className="list-group list-group-flush mx-3 mt-4">
             <div

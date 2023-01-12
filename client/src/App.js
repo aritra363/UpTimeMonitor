@@ -5,9 +5,7 @@ import { LoginPrivateRoute } from "./PrivateRoute/LoginPrivateRoute";
 
 import { MainProvider } from "./Context/MainState";
 import { DashboardPrivateRoute } from "./PrivateRoute/DashboardPrivateRoute";
-import { useContext, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import Popup from "reactjs-popup";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (

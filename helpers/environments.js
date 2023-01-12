@@ -11,7 +11,7 @@ const environments = {};
 
 //For Staging
 environments.staging = {
-  port: 4000,
+  port: process.env.PORT || 4000,
   envname: "staging",
   secretKey: process.env.SECRET_KEY_S,
   maxChecks: 5,

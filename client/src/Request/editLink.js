@@ -12,11 +12,9 @@ const editLink = async (id, linkData, token) => {
     if (userResponse.status === 200) {
       return true;
     } else {
-      alert("Invalid edit link data");
       return false;
     }
   } catch (err) {
-    alert("Server Error please try again!");
     return false;
   }
 };

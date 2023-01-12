@@ -21,14 +21,13 @@ function ViewLinks() {
     setneedRefresh,
     linkintID,
     setlinkintID,
-    firstTimer,
     setfirstTimer,
-    setoptionComponent,
+    linkComp,
+    setlinkComp,
   } = useContext(MainState);
   //local state for loading
   const [isloading, setisloading] = useState(true);
   //local state for link component
-  const [linkComp, setlinkComp] = useState(<p>No Links,Please Add</p>);
   const getCheckData = () => {
     setisloading(true);
     let checkobj;
@@ -59,22 +58,20 @@ function ViewLinks() {
             );
           })
         );
-        console.log("called");
         setisloading(false);
+        setfirstTimer(false);
       });
     }
   };
   useEffect(() => {
-    if (firstTimer) {
-      const intervalId = setInterval(() => {
-        getCheckData();
-        console.log("refreshed");
-      }, 1000 * 60);
-      setlinkintID(intervalId);
-      setfirstTimer(false);
-    } else {
-      getCheckData();
+    if (linkintID) {
+      clearInterval(linkintID);
+      clearInterval(linkintID - 1);
     }
+    const intervalId = setInterval(function () {
+      getCheckData();
+    }, 1000 * 60);
+    setlinkintID(intervalId);
   }, []);
   useEffect(() => {
     getCheckData();

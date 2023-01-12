@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import MainState from "../../Context/MainState";
 import { IoUnlinkSharp, IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";

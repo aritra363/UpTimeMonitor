@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import MainState from "../../Context/MainState";
-import { FaUserAlt, FaEdit, FaPhone } from "react-icons/fa";
+import { FaUserAlt, FaPhone } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 
 function ChangePassword() {

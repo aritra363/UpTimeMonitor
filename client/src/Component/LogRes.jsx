@@ -10,16 +10,13 @@ import checkUserToken from "../Request/checkUserToken";
 import fetchUserData from "../Request/fetchUserData";
 import createUserToken from "../Request/createUserToken";
 import createUserData from "../Request/createUserData";
-import { AiTwotoneEdit, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 function LogRes() {
   //state for token and isloggedin
   const {
-    isLoggedin,
     setisLoggedin,
     setuserData,
-    userData,
-    tokenExp,
     setfirstTimer,
   } = useContext(MainState);
   //state for toggling login and reegistartion form
@@ -371,8 +368,8 @@ function LogRes() {
         fetchUserData(data.phone, token).then((userObj) => {
           if (userObj) {
             setuserData(userObj);
-            setisLoggedin(true);
             setfirstTimer(true);
+            setisLoggedin(true);
           } else {
             setisLoggedin(false);
           }

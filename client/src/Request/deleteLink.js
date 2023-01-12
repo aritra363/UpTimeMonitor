@@ -11,11 +11,9 @@ const deleteLink = async (linkId, token) => {
     if (userResponse.status === 200) {
       return true;
     } else {
-      alert("Auth Error");
       return false;
     }
   } catch (err) {
-    alert("Server Error please try again!");
     return false;
   }
 };

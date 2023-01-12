@@ -13,11 +13,9 @@ const addLink = async (linkData, token) => {
       const result = await userResponse.json();
       return result["checkObj"].id;
     } else {
-      alert("Invalid Link details");
       return false;
     }
   } catch (err) {
-    alert("Server Error please try again!");
     return false;
   }
 };

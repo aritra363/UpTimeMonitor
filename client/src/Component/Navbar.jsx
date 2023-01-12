@@ -29,7 +29,6 @@ function Navbar() {
     setintID,
     intID,
     linkintID,
-    setlinkintID,
   } = useContext(MainState);
 
   const [time, settime] = useState("00:00:00");
@@ -100,7 +99,6 @@ function Navbar() {
               const exp = await extendToken(localStorage.getItem("token"));
               if (exp) {
                 expiry = exp;
-                console.log("done");
               } else {
                 toast.error("Something went Wrong Please ReLogin!", {
                   duration: 2000,
@@ -117,7 +115,7 @@ function Navbar() {
   }, []);
   return (
     <>
-      <nav className="navbar navbar-expand-lg ">
+      <nav className="navbar navbar-expand-lg custom-style">
         <div className="container-fluid">
           <div
             className="navbar-brand"

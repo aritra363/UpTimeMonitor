@@ -9,11 +9,9 @@ const createUserData = async (Userdata) => {
     if (userResponse.status === 200) {
       return true;
     } else {
-      alert("Invalid User Details");
       return false;
     }
   } catch (err) {
-    alert("Server Error please try again!");
     return false;
   }
 };

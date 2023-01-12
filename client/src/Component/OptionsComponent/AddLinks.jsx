@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import MainState from "../../Context/MainState";
 import {
   IoUnlinkSharp,
-  IoCheckmarkDoneCircleSharp,
   IoAddCircleOutline,
   IoAddCircleSharp,
 } from "react-icons/io5";
@@ -12,11 +11,9 @@ import { BsSignpost2Fill } from "react-icons/bs";
 import "../../CStyling/AddLinks.css";
 import { toast } from "react-hot-toast";
 import addLink from "../../Request/addLink";
-import { renderMatches, useNavigate } from "react-router-dom";
 import ViewLinks from "./ViewLinks";
 
 function AddLinks() {
-  const navigate = useNavigate();
   const { userData, setneedRefresh, setoptionComponent } =
     useContext(MainState);
   //state for url

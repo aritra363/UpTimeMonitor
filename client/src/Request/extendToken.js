@@ -15,7 +15,6 @@ const extendToken = async (token) => {
     if (response.status === 200) {
       return data.TokenValidUpto;
     } else {
-      //alert("Server Error Please logout and login again");
       return data;
     }
   }

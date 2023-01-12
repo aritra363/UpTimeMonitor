@@ -13,11 +13,9 @@ const editUserData = async (Userdata, token) => {
       return true;
     } else {
       console.log(typeof Userdata.phone);
-      alert("Invalid FirstName / LastName/ Password");
       return false;
     }
   } catch (err) {
-    alert("Server Error please try again!");
     return false;
   }
 };

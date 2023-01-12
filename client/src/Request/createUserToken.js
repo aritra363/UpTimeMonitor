@@ -15,12 +15,10 @@ const createUserToken = async (phone, password) => {
       if (response.status === 200) {
         return data;
       } else {
-        alert("Invalid phone and password");
         return false;
       }
     }
   } catch {
-    alert("Server Error! Please try again");
     return false;
   }
 };

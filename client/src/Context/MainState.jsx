@@ -25,9 +25,13 @@ export const MainProvider = ({ children }) => {
   const [needRefresh, setneedRefresh] = useState(false);
   //state to control link timer
   const [firstTimer, setfirstTimer] = useState(true);
+
+  const [linkComp, setlinkComp] = useState(<p>No Links,Please Add</p>);
   return (
     <MainState.Provider
       value={{
+        linkComp,
+        setlinkComp,
         needRefresh,
         setneedRefresh,
         modal,
