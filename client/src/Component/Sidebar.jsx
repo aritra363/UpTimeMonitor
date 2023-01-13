@@ -221,6 +221,19 @@ function Sidebar() {
           </div>
         </div>
       </nav>
+      <nav className="navbar  navbar-light bg-light mobile-nav">
+        <div className="list-group  mx-1 mt-1">
+          <div
+            className="list-group-item list-group-item-action py-2"
+            aria-current="true"
+          >
+            <FaTachometerAlt size="30" />
+            &nbsp;
+            <span>{dashboardName}</span>
+          </div>
+          {menuLinks}
+        </div>
+      </nav>
     </>
   );
 }

@@ -6,8 +6,8 @@ function Dashboard() {
   return (
     <>
       <header>
-        <Sidebar />
         <Navbar />
+        <Sidebar />
       </header>
       <DashboardMain />
     </>
